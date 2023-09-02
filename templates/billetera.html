@@ -1,0 +1,73 @@
+{% extends "layouts/main.html" %} 
+
+{% block content %}
+
+    <h1 style="font-family:cursive; font-weight:">Wallet App</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="py-2">
+                <label for="id_ingresos_mensuales" style="font-family:cursive;">Ingresos Mensuales:</label>
+                <input type="number" step="0.01" name="ingresos_mensuales" id="id_ingresos_mensuales">
+            </div>
+            
+            <div class="py-2">
+                <label style="font-family:cursive;">Etiquetas de Gastos Fijos:</label>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('alquiler')">Alquiler</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('comida')">Comida</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('transporte')">Transporte</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('telefonia')">Telefonía</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('gimnasio')">Gimnasio</button>
+                <!-- Agrega más botones para otras etiquetas -->
+
+                <div class="py-1" id="campo_alquiler" style="display: none;">
+                    <label for="id_gasto_alquiler" style="font-family:cursive;">Alquiler:</label>
+                    <input type="number" step="0.01" name="gasto_alquiler" id="id_gasto_alquiler">
+                </div>
+
+                <div class="py-1" id="campo_comida" style="display: none;">
+                    <label for="id_gasto_comida" style="font-family:cursive;">Comida:</label>
+                    <input type="number" step="0.01" name="gasto_comida" id="id_gasto_comida">
+                </div>
+
+                <div class="py-1" id="campo_transporte" style="display: none;">
+                    <label for="id_gasto_transporte" style="font-family:cursive;">Transporte:</label>
+                    <input type="number" step="0.01" name="gasto_transporte" id="id_gasto_transporte">
+                </div>
+
+                <div class="py-1" id="campo_telefonia" style="display: none;">
+                    <label for="id_gasto_telefonia" style="font-family:cursive;">Telefonía:</label>
+                    <input type="number" step="0.01" name="gasto_telefonia" id="id_gasto_telefonia">
+                </div>
+
+                <div class="py-1" id="campo_gimnasio" style="display: none;">
+                    <label for="id_gasto_gimnasio" style="font-family:cursive;">Gimnasio:</label>
+                    <input type="number" step="0.01" name="gasto_gimnasio" id="id_gasto_gimnasio">
+                </div>
+                <!-- Agrega más divs para otros campos -->
+            </div>
+
+            <div class="py-2">
+                <label for="id_gastos_eventuales" style="font-family:cursive;">Gastos Eventuales:</label>
+                <input type="number" step="0.01" name="gastos_eventuales" id="id_gastos_eventuales">
+            </div>
+            
+            <div class="py-2">
+                <label for="id_porcentaje_ahorro" style="font-family:cursive;">Porcentaje de Ahorro:</label>
+                <input type="number" step="0.01" name="porcentaje_ahorro" id="id_porcentaje_ahorro">
+            </div>
+            
+            <div class="py-2">
+                <button class="btn btn-outline-success" type="submit"><b>Calcular Ahorro</b></button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function mostrarCampo(etiqueta) {
+            var campo = document.getElementById('campo_' + etiqueta);
+            campo.style.display = 'block';
+        }
+    </script>
+
+{% endblock %}

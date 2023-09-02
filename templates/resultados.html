@@ -1,0 +1,15 @@
+{% extends "layouts/main.html" %}
+
+{% block content %}
+
+    <h1 style="font-family:cursive;">Resultados</h1>
+    <p style="font-family:cursive;">Ahorro actual: {{ ahorro }}</p>
+    <p style="font-family:cursive;">Ahorro deseado: {{ ahorro_deseado }}</p>
+
+    {% if ahorros_van_bien %}
+        <p style="color: green; font-family:cursive;"><b>TUS AHORROS VIENEN BIEN <span>:)</span></b></p>
+    {% else %}
+        <p style="color: red; font-family:cursive;"><b>TUS AHORROS ESTAN POR DEBAJO DE LO DESEADO <span>:(</span></b></p>
+    {% endif %}
+
+{% endblock %}
