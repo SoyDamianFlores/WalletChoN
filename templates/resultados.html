@@ -1,15 +1,116 @@
 {% extends "layouts/main.html" %}
 
 {% block content %}
+    <div class="container-fluid" style="font-family:cursive;" id="result">
+        <div class="container-fluid d-flex justify-content-center">
+            <h1 style="font-family:cursive;">Resumen Porcentual</h1>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th style="font-size:large">Gastos Fijos</th>
+                    <th style="font-size:large">Monto</th>
+                    <th style="font-size:large">Porcentaje Equivalente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alquiler</td>
+                    <td>{{ gasto_alquiler }}</td>
+                    <td>{{ porcentaje_alquiler|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Comida</td>
+                    <td>{{ gasto_comida }}</td>
+                    <td>{{ porcentaje_comida|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Transporte</td>
+                    <td>{{ gasto_transporte }}</td>
+                    <td>{{ porcentaje_transporte|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Telefonía</td>
+                    <td>{{ gasto_telefonia }}</td>
+                    <td>{{ porcentaje_telefonia|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Gimnasio</td>
+                    <td>{{ gasto_gimnasio }}</td>
+                    <td>{{ porcentaje_gimnasio|floatformat:1 }}%</td>
+                </tr>
+                <!-- Agrega filas para otros gastos fijos -->
+            </tbody>
+            <thead>
+                <tr>
+                    <th style="font-size:large">Gastos Eventuales</th>
+                    <th style="font-size:large">Monto</th>
+                    <th style="font-size:large">Porcentaje Equivalente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fiestas</td>
+                    <td>{{ gasto_fiestas }}</td>
+                    <td>{{ porcentaje_fiestas|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Restaurant</td>
+                    <td>{{ gasto_restaurant }}</td>
+                    <td>{{ porcentaje_restaurant|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Shopping</td>
+                    <td>{{ gasto_shopping }}</td>
+                    <td>{{ porcentaje_shopping|floatformat:1 }}%</td>
+                </tr>
+                <tr>
+                    <td>Otros</td>
+                    <td>{{ gasto_otros }}</td>
+                    <td>{{ porcentaje_otros|floatformat:1 }}%</td>
+                </tr>
+                <!-- Agrega filas para otros gastos eventuales -->
+            </tbody>
+        </table>
+    </div>
 
-    <h1 style="font-family:cursive;">Resultados</h1>
-    <p style="font-family:cursive;">Ahorro actual: {{ ahorro }}</p>
-    <p style="font-family:cursive;">Ahorro deseado: {{ ahorro_deseado }}</p>
+    <div class="container-fluid py-3" style="font-family:cursive;">
+        <div class="container-fluid d-flex justify-content-center">
+            <h1 style="font-family:cursive;">Resultados Generales</h1>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>     </th>
+                    <th>     </th>
+                    <th>     </th>
+                    <th style="font-family:cursive;">Ahorro actual:</th>
+                    <th style="font-family:cursive;">{{ ahorro }}</th>
+                    <th>     </th>
+                    <th>     </th>
+                    <th>     </th>
+                </tr>
+                <tr>
+                    <th>     </th>
+                    <th>     </th>
+                    <th>     </th>
+                    <th style="font-family:cursive;">Ahorro deseado:</th>
+                    <th style="font-family:cursive;">{{ ahorro_deseado|floatformat:0 }}</th>
+                    <th>     </th>
+                    <th>     </th>
+                    <th>     </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="container-fluid d-flex justify-content-center">
+            {% if ahorros_van_bien %}
+            <p style="color: green; font-family:cursive; font-size: x-large"><b>TUS AHORROS VIENEN BIEN <span>:)</span></b></p>
+            {% else %}
+                <p style="color: red; font-family:cursive;font-size: x-large"><b>TUS AHORROS ESTAN POR DEBAJO DE LO DESEADO <span>:(</span></b></p>
+            {% endif %}
+        </div>
+    </div>
 
-    {% if ahorros_van_bien %}
-        <p style="color: green; font-family:cursive;"><b>TUS AHORROS VIENEN BIEN <span>:)</span></b></p>
-    {% else %}
-        <p style="color: red; font-family:cursive;"><b>TUS AHORROS ESTAN POR DEBAJO DE LO DESEADO <span>:(</span></b></p>
-    {% endif %}
 
 {% endblock %}
+

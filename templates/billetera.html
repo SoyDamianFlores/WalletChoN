@@ -49,7 +49,32 @@
 
             <div class="py-2">
                 <label for="id_gastos_eventuales" style="font-family:cursive;">Gastos Eventuales:</label>
-                <input type="number" step="0.01" name="gastos_eventuales" id="id_gastos_eventuales">
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('fiestas')">Fiestas</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('restaurant')">Restaurant</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('shopping')">Shopping</button>
+                <button class="btn btn-outline-dark" id="botin" type="button" onclick="mostrarCampo('otros')">Otros</button>
+                
+                <div class="py-1" id="campo_fiestas" style="display: none;">
+                    <label for="id_gasto_fiestas" style="font-family:cursive;">Fiestas:</label>
+                    <input type="number" step="0.01" name="gasto_fiestas" id="id_gasto_fiestas">
+                </div>
+
+                <div class="py-1" id="campo_restaurant" style="display: none;">
+                    <label for="id_gasto_restaurant" style="font-family:cursive;">Restaurant:</label>
+                    <input type="number" step="0.01" name="gasto_restaurant" id="id_gasto_crestaurant">
+                </div>
+
+                <div class="py-1" id="campo_shopping" style="display: none;">
+                    <label for="id_gasto_shopping" style="font-family:cursive;">Shopping:</label>
+                    <input type="number" step="0.01" name="gasto_shopping" id="id_gasto_shopping">
+                </div>
+
+                <div class="py-1" id="campo_otros" style="display: none;">
+                    <label for="id_gasto_otros" style="font-family:cursive;">Otros:</label>
+                    <input type="number" step="0.01" name="gasto_otros" id="id_gasto_otros">
+                </div>
+
+                
             </div>
             
             <div class="py-2">

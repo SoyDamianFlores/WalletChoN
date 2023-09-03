@@ -8,3 +8,12 @@
     font-family:cursive;
     font-weight: bold;
 }
+
+#result th{
+    color: rgb(3, 94, 82);
+    font-weight: bold;
+    
+}
+#result td{
+    color: rgb(9, 128, 21);
+}
