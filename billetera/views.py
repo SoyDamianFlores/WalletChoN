@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.generics import CreateAPIView
 from .models import Calculo
+from decimal import Decimal
 from .serializers import CalculoSerializer  
 from rest_framework import serializers
 from rest_framework import status
@@ -68,37 +69,55 @@ def billetera_view(request):
     if request.method == 'POST':
         form = BilleteraForm(request.POST)
         if form.is_valid():
-            ingresos_mensuales = form.cleaned_data['ingresos_mensuales']
-            
-            porcentaje_ahorro = form.cleaned_data['porcentaje_ahorro']
+            ingresos_mensuales = form.cleaned_data.get('ingresos_mensuales', Decimal('0'))
+            if ingresos_mensuales is None or ingresos_mensuales <= 0:
+                messages.warning(request, 'Debe ingresar un valor valido para los ingresos mensuales.')
+                return redirect('/billetera')
+
+            porcentaje_ahorro = form.cleaned_data.get('porcentaje_ahorro', Decimal('0'))
+           
 
             # Obtén los valores de los gastos fijos dinámicos
-            gasto_alquiler = form.cleaned_data['gasto_alquiler']
-            gasto_comida = form.cleaned_data['gasto_comida']
-            gasto_transporte = form.cleaned_data['gasto_transporte']
-            gasto_telefonia = form.cleaned_data['gasto_telefonia']
-            gasto_gimnasio = form.cleaned_data['gasto_gimnasio']
-
-           
+            gasto_alquiler = form.cleaned_data.get('gasto_alquiler')
+            if gasto_alquiler is None:
+                gasto_alquiler = Decimal('0')
+            gasto_comida = form.cleaned_data.get('gasto_comida')
+            if gasto_comida is None:
+                gasto_comida = Decimal('0')
+            gasto_transporte = form.cleaned_data.get('gasto_transporte')
+            if gasto_transporte is None:
+                gasto_transporte = Decimal('0')
+            gasto_telefonia = form.cleaned_data.get('gasto_telefonia')
+            if gasto_telefonia is None:
+                gasto_telefonia = Decimal('0')
+            gasto_gimnasio = form.cleaned_data.get('gasto_gimnasio')
+            if gasto_gimnasio is None:
+                gasto_gimnasio = Decimal('0')
 
             # Calcula el total de los gastos fijos
             total_gastos_fijos = gasto_alquiler + gasto_comida + gasto_transporte + gasto_telefonia + gasto_gimnasio
 
-
             # Obtén los valores de los gastos eventuales dinámicos
-            gasto_fiestas = form.cleaned_data['gasto_fiestas']
-            gasto_restaurant = form.cleaned_data['gasto_restaurant']
-            gasto_shopping = form.cleaned_data['gasto_shopping']
-            gasto_otros = form.cleaned_data['gasto_otros']
-
-       
+            gasto_fiestas = form.cleaned_data.get('gasto_fiestas')
+            if gasto_fiestas is None:
+                gasto_fiestas = Decimal('0')
+            gasto_restaurant = form.cleaned_data.get('gasto_restaurant')
+            if gasto_restaurant is None:
+                gasto_restaurant = Decimal('0')
+            gasto_shopping = form.cleaned_data.get('gasto_shopping')
+            if gasto_shopping is None:
+                gasto_shopping = Decimal('0')
+            gasto_otros = form.cleaned_data.get('gasto_otros')
+            if gasto_otros is None:
+                gasto_otros = Decimal('0')
 
             # Calcula el total de los gastos eventuales
             total_gastos_eventuales = gasto_fiestas + gasto_restaurant + gasto_shopping + gasto_otros
 
+
             # Calcula el ahorro actual y el ahorro deseado
             ahorro = ingresos_mensuales - total_gastos_fijos - total_gastos_eventuales
-            ahorro_deseado = ingresos_mensuales * (porcentaje_ahorro / 100)
+            ahorro_deseado = ingresos_mensuales * (porcentaje_ahorro / Decimal ('100'))
 
             # Determina si los ahorros van bien
             ahorros_van_bien = ahorro >= ahorro_deseado
