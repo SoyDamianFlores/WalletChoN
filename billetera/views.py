@@ -75,6 +75,9 @@ def billetera_view(request):
                 return redirect('/billetera')
 
             porcentaje_ahorro = form.cleaned_data.get('porcentaje_ahorro', Decimal('0'))
+            if porcentaje_ahorro is None or porcentaje_ahorro <= 0:
+                messages.warning(request, 'Debe ingresar un valor valido para el porcentaje de ahorros.')
+                return redirect('/billetera')
            
 
             # Obtén los valores de los gastos fijos dinámicos
