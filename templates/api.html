@@ -1,0 +1,19 @@
+{% extends "layouts/main.html" %} 
+{% load static %}
+
+{% block content %}
+
+<p style="font-family:cursive; font-size:large">{{ message }}</p>
+
+<div class="container-fluid" style="font-family:cursive;">
+    <div class="row">
+        <div class="col-md-4"><img src="{% static 'images/apilogo.jpg' %}" alt="Logo Wallet" width="300px" height="300px" id="logoapi"/>
+        </div>
+        <div class="col-md-3 py-3 py-md-0" style="display: flex; align-items: center;"><button class="btn btn-dark" type="submit"> <a href="/api/create" style="text-decoration: none; color: rgb(11, 251, 183);"> API CREATE </a> </button>
+        </div>
+        <div class="col-md-3 py-3 py-md-0" style="display: flex; align-items: center;"><button class="btn btn-dark" type="submit"> <a href="/api/list" style="text-decoration: none; color: rgb(11, 251, 183);"> API LIST </a> </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layouts/main.html" %} 
+{% load static %}
+
+{% block content %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Acceso Restringido</title>
+</head>
+<body>
+    <h1>Acceso Restringido</h1>
+    <p>Lo sentimos, solo los administradores pueden acceder a esta página.</p>
+
+    <div class="container-fluid" style="font-family:cursive;">
+        <div class="row">
+
+    <div class="col-md-4"><img src="{% static 'images/acceso-restringido.png' %}" alt="denegado" width="250px" height="150px"/>
+    </div>
+
+    <div class="col-md-3 py-3 py-md-0" style="display: flex; align-items: center;"><button class="btn btn-secondary" type="submit"> <a href="/" style="text-decoration: none; color: rgb(162, 9, 9); font-weight: bold;"> IR AL INICIO </a> </button>
+    </div>
+</body>
+</html>
+
+{% endblock %}

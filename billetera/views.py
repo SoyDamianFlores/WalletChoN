@@ -7,29 +7,42 @@ from rest_framework.generics import CreateAPIView
 from .models import Calculo
 from decimal import Decimal
 from .serializers import CalculoSerializer  
-from rest_framework import serializers
 from rest_framework import status
-from rest_framework.response import Response
 from rest_framework import status
 import requests
 from rest_framework.generics import CreateAPIView, ListAPIView
 from .models import Calculo
 from .serializers import CalculoSerializer
-from django.http import JsonResponse
+from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 
+def is_admin(user):
+    return user.is_superuser
 
+@method_decorator(user_passes_test(is_admin, login_url=reverse_lazy('acceso-restringido')), name='dispatch')
 class CalculoCreate(CreateAPIView):
     queryset = Calculo.objects.all()
     serializer_class = CalculoSerializer
 
+@method_decorator(user_passes_test(is_admin, login_url=reverse_lazy('acceso-restringido')), name='dispatch')
 class CalculoList(ListAPIView):
     queryset = Calculo.objects.all()
     serializer_class = CalculoSerializer
 
-def api_home(request):
-    message = "Bienvenido a la API de cálculos. Consulta la documentación para obtener más información sobre cómo usar la API."
-    return JsonResponse({"message": message})
+def acceso_restringido(request):
+    return render(request, 'acceso_restringido.html')
 
+
+        
+
+def api_home(request):
+    if request.user.is_superuser:
+        message = "Bienvenido a la API de cálculos. Consulta la documentación para obtener más información sobre cómo usar la API."
+        return render(request, "api.html", {"message": message})
+    else:
+        messages.warning(request, "Solo los administradores pueden acceder a esta página.")
+        return redirect('/login')
 
 
 
@@ -212,6 +225,8 @@ def registerPage(request):
 
 def home_view(request):
     return render(request, 'home.html')
+
+
 
 
 

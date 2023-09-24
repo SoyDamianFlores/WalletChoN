@@ -4,7 +4,7 @@ from .views import billetera_view
 from .views import home_view
 from .views import login
 from .views import CalculoCreate, CalculoList
-from .views import billetera_view, home_view, loginPage, registerPage, logoutPage, api_home
+from .views import billetera_view, home_view, loginPage, registerPage, logoutPage, api_home, acceso_restringido
 
 
 
@@ -17,4 +17,5 @@ urlpatterns = [
     path('api/', api_home, name='api-home'),
     path('api/create/', CalculoCreate.as_view(), name='calculo-create'),
     path('api/list/', CalculoList.as_view(), name='calculo-list'),
+    path('acceso-restringido/', acceso_restringido, name='acceso-restringido'),
 ]

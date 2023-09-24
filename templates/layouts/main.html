@@ -78,24 +78,18 @@
               <a class="nav-link" href="/billetera/"> Go To Wallet </a>
             </li>
             {% endif %}
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
+            
+            {% if request.user.is_authenticated and request.user.is_staff %}
+              <li class="nav-item">
+                  <a class="nav-link" href="/admin/">Admin Panel</a>
+              </li>
+            {% endif %}
+
+            {% if request.user.is_authenticated and request.user.is_staff %}
+              <li class="nav-item">
+                  <a class="nav-link" href="/api/">API Panel</a>
+              </li>
+            {% endif %}
 
             {% if request.user.is_authenticated %}
             <li class="nav-item">
