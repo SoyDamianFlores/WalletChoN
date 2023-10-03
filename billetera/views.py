@@ -7,15 +7,13 @@ from rest_framework.generics import CreateAPIView
 from .models import Calculo
 from decimal import Decimal
 from .serializers import CalculoSerializer  
-from rest_framework import status
-from rest_framework import status
-import requests
 from rest_framework.generics import CreateAPIView, ListAPIView
 from .models import Calculo
 from .serializers import CalculoSerializer
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
+
 
 def is_admin(user):
     return user.is_superuser
@@ -72,10 +70,8 @@ def calcular_porcentajes(ingresos_mensuales, gasto_alquiler, gasto_comida, gasto
             'porcentaje_restaurant': porcentaje_restaurant,
             'porcentaje_shopping': porcentaje_shopping,
             'porcentaje_otros': porcentaje_otros,
-            # Agrega más porcentajes según sea necesario
+           
         }
-
-
 
 
 def billetera_view(request):
@@ -130,28 +126,29 @@ def billetera_view(request):
             # Calcula el total de los gastos eventuales
             total_gastos_eventuales = gasto_fiestas + gasto_restaurant + gasto_shopping + gasto_otros
 
-
             # Calcula el ahorro actual y el ahorro deseado
             ahorro = ingresos_mensuales - total_gastos_fijos - total_gastos_eventuales
-            ahorro_deseado = ingresos_mensuales * (porcentaje_ahorro / Decimal ('100'))
+            ahorro_deseado = ingresos_mensuales * (porcentaje_ahorro / Decimal('100'))
 
             # Determina si los ahorros van bien
             ahorros_van_bien = ahorro >= ahorro_deseado
-            
 
             # Aquí creamos un nuevo cálculo y lo guardamos en la API
-            nuevo_calculo = {
+            calculo_serializer = CalculoSerializer(data={
                 'usuario': request.user.id,  # Suponiendo que tienes una autenticación de usuario
                 'ahorro': ahorro,
                 'ahorro_deseado': ahorro_deseado,
                 'ahorros_van_bien': ahorros_van_bien
-            }
-            response = requests.post('http://localhost:8000/api/create/', data=nuevo_calculo)
+            })
 
-            porcentajes = calcular_porcentajes(ingresos_mensuales, gasto_alquiler, gasto_comida, gasto_transporte, gasto_telefonia, gasto_gimnasio, gasto_fiestas, gasto_restaurant, gasto_shopping, gasto_otros)
-            # Verificamos si la creación fue exitosa
-            if response.status_code == status.HTTP_201_CREATED:
-                # Redirigimos a la vista de resultados con los datos calculados
+            if calculo_serializer.is_valid():
+                calculo_serializer.save()
+
+                porcentajes = calcular_porcentajes(
+                    ingresos_mensuales, gasto_alquiler, gasto_comida, gasto_transporte, gasto_telefonia, gasto_gimnasio,
+                    gasto_fiestas, gasto_restaurant, gasto_shopping, gasto_otros
+                )
+
                 return render(request, 'resultados.html', {
                     'ahorro': ahorro,
                     'ahorro_deseado': ahorro_deseado,
@@ -175,15 +172,15 @@ def billetera_view(request):
                     'porcentaje_shopping': porcentajes['porcentaje_shopping'],
                     'porcentaje_otros': porcentajes['porcentaje_otros'],
                 })
+
             else:
                 messages.error(request, 'Hubo un error al guardar el cálculo.')
-
-
     else:
         form = BilleteraForm()
-    return render(request, 'billetera.html', {'form': form})
-
-   
+        return render(request, 'billetera.html', {'form': form})
+            
+            
+        
 
 def loginPage(request):
     if(request.method == 'POST'):
